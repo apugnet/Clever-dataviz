@@ -9,6 +9,3 @@ sns.catplot(data=data.sort_values("date_heure"), x="date_heure", y='h_ratio', hu
 
 plt.show();
 
-
-
-
