@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hackaviz 2025 - Clever Age</title>
+    <title>Graphique Combo Bar/Line avec Chart.js</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Hackaviz 2025 - Clever Age</h1>
     <div style="width: 80%; margin: auto;">
         <canvas id="comboChart"></canvas>
     </div>
@@ -30,18 +29,24 @@
             const labels = [];
             const hauteurMaxData = [];
             const moyenneMoisData = [];
+            const maxDebitData = [];
+            const pluvioRatioData = [];
 
             lines.slice(1).forEach(row => {
                 const cols = row.split(separator);
-                if (cols.length >= 3) {
-                    const mois = cols[0].trim();
-                    const hauteur_max = parseFloat(cols[1].replace(',', '.'));
-                    const moyenne_mois = parseFloat(cols[2].replace(',', '.'));
+                if (cols.length >= 5) {
+                    const mois = cols[0].trim().replace("-", " ");
+                    const hauteur_max = parseFloat(cols[1].replace(',', '.')) || 0;
+                    const moyenne_mois = parseFloat(cols[2].replace(',', '.')) || 0;
+                    const max_debit = parseFloat(cols[3].replace(',', '.')) || 0;
+                    const pluvio_ratio = parseFloat(cols[4].replace(',', '.'));
 
-                    if (!isNaN(hauteur_max) && !isNaN(moyenne_mois)) {
+                    if (!isNaN(hauteur_max) && !isNaN(moyenne_mois) && !isNaN(max_debit) ) {
                         labels.push(mois);
                         hauteurMaxData.push(hauteur_max);
                         moyenneMoisData.push(moyenne_mois);
+                        maxDebitData.push(max_debit);
+                        pluvioRatioData.push(pluvio_ratio);
                     }
                 }
             });
@@ -49,6 +54,8 @@
             console.log('Labels:', labels);
             console.log('Hauteur Max:', hauteurMaxData);
             console.log('Moyenne Mois:', moyenneMoisData);
+            console.log('Max Débit:', maxDebitData);
+            console.log('Pluvio Ratio:', pluvioRatioData);
 
             const ctx = document.getElementById('comboChart').getContext('2d');
             new Chart(ctx, {
@@ -57,7 +64,7 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Hauteur Max (mm)',
+                            label: 'Hauteur Max',
                             data: hauteurMaxData,
                             backgroundColor: 'rgba(75, 192, 192, 0.2)',
                             borderColor: 'rgba(75, 192, 192, 1)',
@@ -65,14 +72,32 @@
                             yAxisID: 'y',
                         },
                         {
-                            label: 'Moyenne du Mois (mm)',
+                            label: 'Max Débit',
+                            data: maxDebitData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'y',
+                        },
+                        {
+                            label: 'Moyenne du Mois',
                             data: moyenneMoisData,
                             type: 'line',
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
                             borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 2,
                             fill: false,
-                            yAxisID: 'y', // Correction : utiliser la même échelle que la hauteur max
+                            yAxisID: 'y',
+                        },
+                        {
+                            label: 'Pluviométrie',
+                            data: pluvioRatioData,
+                            type: 'line',
+                            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 2,
+                            fill: false,
+                            yAxisID: 'y',
                         }
                     ]
                 },
@@ -83,7 +108,7 @@
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Hauteur (mm)'
+                                text: ''
                             }
                         },
                         x: {
@@ -101,4 +126,3 @@
     </script>
 </body>
 </html>
-
