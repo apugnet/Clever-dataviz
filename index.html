@@ -4,10 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hackaviz 2025 - Clever Age</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="title">Hackaviz 2025 - Clever Age</div>
+    <h1>Hackaviz 2025 - Clever Age</h1>
+    <div style="width: 80%; margin: auto;">
+        <canvas id="comboChart"></canvas>
     </div>
+
+    <script>
+        async function createChart() {
+            const csvUrl = 'https://raw.githubusercontent.com/apugnet/Clever-dataviz/refs/heads/main/data/hauteurmaxmensuellecures.csv';
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+
+            const lines = data.trim().split('\n');
+            if (lines.length < 2) {
+                console.error('Fichier CSV vide ou mal formaté.');
+                return;
+            }
+
+            // Détection automatique du séparateur (',' ou ';')
+            const separator = lines[0].includes(';') ? ';' : ',';
+
+            const labels = [];
+            const hauteurMaxData = [];
+            const moyenneMoisData = [];
+
+            lines.slice(1).forEach(row => {
+                const cols = row.split(separator);
+                if (cols.length >= 3) {
+                    const mois = cols[0].trim();
+                    const hauteur_max = parseFloat(cols[1].replace(',', '.'));
+                    const moyenne_mois = parseFloat(cols[2].replace(',', '.'));
+
+                    if (!isNaN(hauteur_max) && !isNaN(moyenne_mois)) {
+                        labels.push(mois);
+                        hauteurMaxData.push(hauteur_max);
+                        moyenneMoisData.push(moyenne_mois);
+                    }
+                }
+            });
+
+            console.log('Labels:', labels);
+            console.log('Hauteur Max:', hauteurMaxData);
+            console.log('Moyenne Mois:', moyenneMoisData);
+
+            const ctx = document.getElementById('comboChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Hauteur Max (mm)',
+                            data: hauteurMaxData,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1,
+                            yAxisID: 'y',
+                        },
+                        {
+                            label: 'Moyenne du Mois (mm)',
+                            data: moyenneMoisData,
+                            type: 'line',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            fill: false,
+                            yAxisID: 'y', // Correction : utiliser la même échelle que la hauteur max
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Hauteur (mm)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Mois'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        createChart();
+    </script>
 </body>
 </html>
+
