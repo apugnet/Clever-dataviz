@@ -96,7 +96,8 @@
                             backgroundColor: 'rgba(255,205,86,0.68)',
                             borderColor: '#FFCD56',
                             borderWidth: 1,
-                            yAxisID: 'y',
+                            yAxisID: 'y2',
+                            fill: '-1',
                             order: 1,
                             barPercentage: 1,
                             categoryPercentage: 1,
@@ -121,6 +122,18 @@
                                 display: true,
                                 text: 'Mois'
                             }
+                        },
+                        y2: {
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Pluviométrie 5 jours avant la crue',
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            },
+                            max: 18000,
+                            reverse: true
                         }
                     }
                 }
