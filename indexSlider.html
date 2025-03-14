@@ -52,6 +52,12 @@
         .swiper-button-next::after, .swiper-button-prev::after {
             font-size: 90px;
         }
+        .swiper-thumbnail .swiper-slide-fully-visible {
+            opacity: 0.5;
+        }
+        .swiper-thumbnail .swiper-slide-thumb-active {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -84,12 +90,19 @@
             slidesPerView: 5,
             freeMode: true,
             watchSlidesProgress: true,
+            lazy: true
         });
 
         const swiper = new Swiper('.main-swiper', {
             loop: true,
             spaceBetween: 0,
             speed: 1000,
+            lazy: {
+                loadPrevNext: true,
+            },
+            mousewheel: {
+                releaseOnEdges: true,
+            },
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
