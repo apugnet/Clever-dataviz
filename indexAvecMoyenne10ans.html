@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphique Combo Bar/Line avec Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div style="width: 100%; margin: auto;">
+        <canvas id="comboChart"></canvas>
+    </div>
+
+    <script>
+        async function createChart() {
+            const csvUrl = 'https://raw.githubusercontent.com/apugnet/Clever-dataviz/refs/heads/main/data/hauteurmaxmensuellecures.csv?a';
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+
+            const lines = data.trim().split('\n');
+            if (lines.length < 2) {
+                console.error('Fichier CSV vide ou mal formaté.');
+                return;
+            }
+
+            // Détection automatique du séparateur (',' ou ';')
+            const separator = lines[0].includes(';') ? ';' : ',';
+
+            const labels = [];
+            const hauteurMaxData = [];
+            const moyenneMoisData = [];
+            const moyenneMois10ansData = [];
+            const maxDebitData = [];
+            const pluvioRatioData = [];
+
+            lines.slice(1).forEach(row => {
+                const cols = row.split(separator);
+                if (cols.length >= 5) {
+                    const mois = cols[0].trim().replace("-", " ");
+                    const hauteur_max = parseFloat(cols[1].replace(',', '.')) || 0;
+                    const moyenne_mois = parseFloat(cols[2].replace(',', '.')) || 0;
+                    const max_debit = parseFloat(cols[3].replace(',', '.')) || 0;
+                    const pluvio_ratio = parseFloat(cols[4].replace(',', '.'));
+                    const moyenne_mois10ans = parseFloat(cols[5].replace(',', '.')) || 0;
+
+                    if (!isNaN(hauteur_max) && !isNaN(moyenne_mois) && !isNaN(max_debit) ) {
+                        labels.push(mois);
+                        hauteurMaxData.push(hauteur_max);
+                        moyenneMoisData.push(moyenne_mois);
+                        maxDebitData.push(max_debit);
+                        pluvioRatioData.push(pluvio_ratio);
+                        moyenneMois10ansData.push(moyenne_mois10ans);
+                    }
+                }
+            });
+
+            console.log('Labels:', labels);
+            console.log('Hauteur Max:', hauteurMaxData);
+            console.log('Moyenne Mois:', moyenneMoisData);
+            console.log('Max Débit:', maxDebitData);
+            console.log('Pluvio Ratio:', pluvioRatioData);
+            console.log('Moyenne mois sur 10ans:', moyenneMois10ansData);
+
+            const ctx = document.getElementById('comboChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Hauteur maximum',
+                            data: hauteurMaxData,
+                            backgroundColor: '#FF6384',
+                            borderColor: '#FF6384',
+                            borderWidth: 0,
+                            order:1,
+                        },
+                        {
+                            label: 'Hauteur moyenne',
+                            data: moyenneMoisData,
+                            type: 'line',
+                            backgroundColor: 'rgba(54,162,235,0.49)',
+                            borderColor: '#36A2EB',
+                            borderWidth: 2,
+                            fill: false,
+                        },
+                        {
+                            label: 'Hauteur moyenne sur 10 ans avant et après les crues',
+                            data: moyenneMois10ansData,
+                            type: 'line',
+                            backgroundColor: 'rgba(238,130,238,0.49)',
+                            borderColor: '#EE82EE',
+                            borderWidth: 5,
+                            fill: false,
+                        },
+                        {
+                            label: 'Débit maximum',
+                            data: maxDebitData,
+                            type: 'line',
+                            backgroundColor: '#4BC0C0',
+                            borderColor: '#4BC0C0',
+                            borderWidth: 3,
+                            fill: false,
+                        },
+                        {
+                            label: 'Pluviométrie 5 jours avant la crue',
+                            data: pluvioRatioData,
+                            backgroundColor: 'rgba(255,205,86,0.68)',
+                            borderColor: '#FFCD56',
+                            borderWidth: 1,
+                            yAxisID: 'y2',
+                            fill: '-1',
+                            order: 1,
+                            barPercentage: 1,
+                            categoryPercentage: 1,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            stacked: false,
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: ''
+                            },
+                            max: 18000
+                        },
+                        x: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Mois'
+                            }
+                        },
+                        y2: {
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Pluviométrie 5 jours avant la crue',
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            },
+                            max: 18000,
+                            reverse: true
+                        }
+                    }
+                }
+            });
+        }
+
+        createChart();
+    </script>
+</body>
+</html>
