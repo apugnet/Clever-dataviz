@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div style="width: 80%; margin: auto;">
+    <div style="width: 100%; margin: auto;">
         <canvas id="comboChart"></canvas>
     </div>
 
@@ -67,38 +67,39 @@
                         {
                             label: 'Hauteur maximum',
                             data: hauteurMaxData,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1,
-                            yAxisID: 'y',
+                            backgroundColor: '#FF6384',
+                            borderColor: '#FF6384',
+                            borderWidth: 0,
+                            order:1,
                         },
                         {
                             label: 'Hauteur moyenne',
                             data: moyenneMoisData,
                             type: 'line',
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(54,162,235,0.49)',
+                            borderColor: '#36A2EB',
                             borderWidth: 2,
                             fill: true,
-                            yAxisID: 'y',
                         },
                         {
                             label: 'Débit maximum',
                             data: maxDebitData,
                             type: 'line',
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 2,
+                            backgroundColor: '#4BC0C0',
+                            borderColor: '#4BC0C0',
+                            borderWidth: 3,
                             fill: false,
-                            yAxisID: 'y',
                         },
                         {
                             label: 'Pluviométrie 5 jours avant la crue',
                             data: pluvioRatioData,
-                            backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                            borderColor: 'rgba(255, 206, 86, 1)',
+                            backgroundColor: 'rgba(255,205,86,0.68)',
+                            borderColor: '#FFCD56',
                             borderWidth: 1,
                             yAxisID: 'y',
+                            order: 1,
+                            barPercentage: 1,
+                            categoryPercentage: 1,
                         }
                     ]
                 },
@@ -106,13 +107,16 @@
                     responsive: true,
                     scales: {
                         y: {
+                            stacked: false,
                             beginAtZero: true,
                             title: {
                                 display: true,
                                 text: ''
-                            }
+                            },
+                            max: 18000
                         },
                         x: {
+                            stacked: true,
                             title: {
                                 display: true,
                                 text: 'Mois'

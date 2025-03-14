@@ -1,3 +1,14 @@
+body {
+    width: 99%;
+    background-image: url("assets/images/pont-neuf-nb.jpg");
+}
+
 canvas {
-    background-image: url("assets/images/266640-Pont-Neuf-Toulouse.jpg");
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Noir avec 50% de transparence */
 }
