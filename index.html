@@ -27,6 +27,9 @@
     <i class="menuIcon material-icons">menu</i>
     <i class="closeIcon material-icons">close</i>
 </button>
+<button id="downloadBtn">
+    <i class="downloadIcon material-icons">download</i>
+</button>
 <div class="swiper main-swiper">
     <div class="swiper-wrapper">
         <div class="swiper-slide" style="background-image: url('assets/images/crues/1857.jpg');"></div>
@@ -115,6 +118,16 @@
             menuItem.addEventListener("click", toggleMenu);
         }
     )
+</script>
+<script>
+    document.getElementById("downloadBtn").addEventListener("click", function() {
+        const lien = document.createElement("a");
+        lien.href = "assets/images/crues/full_crues.png";  // Chemin du fichier
+        lien.download = "assets/images/crues/full_crues.png";  // Nom du fichier téléchargé
+        document.body.appendChild(lien);
+        lien.click();
+        document.body.removeChild(lien);
+    });
 </script>
 </body>
 </html>
