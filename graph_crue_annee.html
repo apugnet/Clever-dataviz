@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphique Combo Bar/Line avec Chart.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<ul class="menu">
+    <li><a class="menuItem level-1" href="index.html">🖼️ Présentation</a></li>
+    <li><a class="menuItem level-1" href="index_full_graph.html">📊 Graphique de l'ensemble des crues</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1857">💧 Graphique de la crue de 1857</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1875">💧 Graphique de la crue de 1875</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1879">💧 Graphique de la crue de 1879</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1900">💧 Graphique de la crue de 1900</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1905">💧 Graphique de la crue de 1905</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1952">💧 Graphique de la crue de 1952</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1977">💧 Graphique de la crue de 1977</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=2000">💧 Graphique de la crue de 2000</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=2022">💧 Graphique de la crue de 2022</a></li>
+</ul>
+<button class="hamburger">
+    <i class="menuIcon material-icons">menu</i>
+    <i class="closeIcon material-icons">close</i>
+</button>
+<div class="title"><span id="title-year"></span></div>
+<div style="width: 100%; margin: auto;">
+    <canvas id="comboChart"></canvas>
+</div>
+
+<script>
+    async function createChart() {
+        const csvUrl = 'https://raw.githubusercontent.com/apugnet/Clever-dataviz/refs/heads/main/data/hauteurs_reference_graph.csv';
+        const response = await fetch(csvUrl);
+        const data = await response.text();
+
+        const lines = data.trim().split('\n');
+        if (lines.length < 2) {
+            console.error('Fichier CSV vide ou mal formaté.');
+            return;
+        }
+
+        // Détection automatique du séparateur (',' ou ';')
+        const separator = lines[0].includes(';') ? ';' : ',';
+
+        const labels = [];
+        const hauteurMaxData = [];
+        const moyenneMoisData = [];
+
+        lines.slice(1).forEach(row => {
+            const cols = row.split(separator);
+            if (cols.length >= 3) {
+                const mois = cols[0].trim().replace("-", " ");
+
+                let params = new URLSearchParams(document.location.search);
+                let paramYear = params.get("year");
+                console.log('Année Crue:', paramYear);
+                document.getElementById("title-year").innerHTML = "Année : " + paramYear;
+
+                if (mois.indexOf(paramYear) == -1) {
+                    return;
+                }
+
+                const hauteur_max = parseFloat(cols[2].replace(',', '.')) || 0;
+                const moyenne_mois = parseFloat(cols[1].replace(',', '.')) || 0;
+
+                if (!isNaN(hauteur_max) && !isNaN(moyenne_mois)) {
+                    labels.push(mois);
+                    hauteurMaxData.push(hauteur_max);
+                    moyenneMoisData.push(moyenne_mois);
+                }
+            }
+        });
+
+        console.log('Labels:', labels);
+        console.log('Hauteur Max:', hauteurMaxData);
+        console.log('Moyenne Mois:', moyenneMoisData);
+
+        const ctx = document.getElementById('comboChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Hauteur maximum',
+                        data: hauteurMaxData,
+                        backgroundColor: '#FF6384',
+                        borderColor: '#FF6384',
+                        borderWidth: 0,
+                        order: 1,
+                    },
+                    {
+                        label: 'Hauteur moyenne',
+                        data: moyenneMoisData,
+                        type: 'line',
+                        backgroundColor: 'rgba(54,162,235,0.49)',
+                        borderColor: '#36A2EB',
+                        borderWidth: 2,
+                        fill: true,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        stacked: false,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: ''
+                        },
+                        max: 18000
+                    },
+                    x: {
+                        stacked: true,
+                        title: {
+                            display: true,
+                            text: 'Mois'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    createChart();
+</script>
+<script>
+
+    const menu = document.querySelector(".menu");
+    const menuItems = document.querySelectorAll(".menuItem");
+    const hamburger = document.querySelector(".hamburger");
+    const closeIcon = document.querySelector(".closeIcon");
+    const menuIcon = document.querySelector(".menuIcon");
+
+    function toggleMenu() {
+        if (menu.classList.contains("showMenu")) {
+            menu.classList.remove("showMenu");
+            closeIcon.style.display = "none";
+            menuIcon.style.display = "block";
+        } else {
+            menu.classList.add("showMenu");
+            closeIcon.style.display = "block";
+            menuIcon.style.display = "none";
+        }
+    }
+
+    hamburger.addEventListener("click", toggleMenu);
+
+    menuItems.forEach(
+        function (menuItem) {
+            menuItem.addEventListener("click", toggleMenu);
+        }
+    )
+</script>
+</body>
+</html>

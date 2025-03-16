@@ -1,5 +1,125 @@
-body {
-    width: 99%;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.swiper {
+    width: 100%;
+    height: 100vh;
+}
+
+.swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
+
+.swiper-container {
+    position: relative;
+}
+
+.swiper-thumbnail {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.swiper-thumbnail .swiper-slide {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: rgba(0, 0, 0, 0.3) !important;
+    width: 60px;
+    height: 60px;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-size: 90px;
+}
+
+.swiper-thumbnail .swiper-slide-fully-visible {
+    opacity: 0.5;
+}
+
+.swiper-thumbnail .swiper-slide-thumb-active {
+    opacity: 1;
+}
+
+.menuItem {
+    font-family: monospace;
+    display: block;
+    margin: 1rem;
+    font-size: 1.3rem;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+
+    &.level-1 {
+        margin: 2rem;
+        font-size: 2rem;
+    }
+}
+
+.menuItem:hover {
+    text-decoration: underline;
+}
+
+.hamburger {
+    position: fixed;
+    z-index: 100;
+    top: 1rem;
+    left: 1rem;
+    padding: 4px;
+    border: black solid 1px;
+    background: white;
+    cursor: pointer;
+}
+
+.closeIcon {
+    display: none;
+}
+
+.menu {
+    position: fixed;
+    transform: translateY(-100%);
+    transition: transform 0.2s;
+    margin: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background: rgba(1, 82, 122, 0.9);
+    color: white;
+    list-style: none;
+    padding-top: 4rem;
+}
+
+.showMenu {
+    transform: translateY(0);
+}
+
+.title {
+    height: 3%;
+    width: 100%;
+    font-family: monospace;
+    font-size: 2rem;
+    text-align: center;
 }
 
 canvas {
@@ -8,5 +128,6 @@ canvas {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 97%;
+    margin-top: 3%;
 }
