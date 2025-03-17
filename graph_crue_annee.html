@@ -5,30 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graphique Combo Bar/Line de l'ensemble des crues</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <ul class="menu">
-    <li><a class="menuItem level-1" href="index.html">🖼️ Présentation</a></li>
-    <li><a class="menuItem level-1" href="index_full_graph.html">📊 Graphique de l'ensemble des crues</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=1857">💧 Graphique de la crue de 1857</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=1875">💧 Graphique de la crue de 1875</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=1879">💧 Graphique de la crue de 1879</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=1900">💧 Graphique de la crue de 1900</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=1905">💧 Graphique de la crue de 1905</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=1952">💧 Graphique de la crue de 1952</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=1977">💧 Graphique de la crue de 1977</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=2000">💧 Graphique de la crue de 2000</a></li>
-    <li><a class="menuItem" href="graph_crue_annee.html?year=2022">💧 Graphique de la crue de 2022</a></li>
+    <li><a class="menuItem level-1" href="index.html">Présentation</a></li>
+    <li><a class="menuItem level-1" href="index_full_graph.html">Graphique de l'ensemble des crues</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1857">Graphique de la crue de 1857</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1875">Graphique de la crue de 1875</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1879">Graphique de la crue de 1879</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1900">Graphique de la crue de 1900</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1905">Graphique de la crue de 1905</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1952">Graphique de la crue de 1952</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=1977">Graphique de la crue de 1977</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=2000">Graphique de la crue de 2000</a></li>
+    <li><a class="menuItem" href="graph_crue_annee.html?year=2022">Graphique de la crue de 2022</a></li>
 </ul>
 <button class="hamburger">
-    <i class="menuIcon material-icons">menu</i>
-    <i class="closeIcon material-icons">close</i>
+    <i class="menuIcon"></i>
+    <i class="closeIcon"></i>
 </button>
 <div class="title"><span id="title-year"></span></div>
-<div style="width: 100%; margin: auto;">
+<div style="width: 99%; margin: auto;">
     <canvas id="comboChart"></canvas>
 </div>
 
@@ -132,7 +130,6 @@
     createChart();
 </script>
 <script>
-
     const menu = document.querySelector(".menu");
     const menuItems = document.querySelectorAll(".menuItem");
     const hamburger = document.querySelector(".hamburger");
@@ -144,7 +141,10 @@
             menu.classList.remove("showMenu");
             closeIcon.style.display = "none";
             menuIcon.style.display = "block";
+            menu.style.display = "none";
+            
         } else {
+            menu.style.display = "block"
             menu.classList.add("showMenu");
             closeIcon.style.display = "block";
             menuIcon.style.display = "none";
