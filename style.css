@@ -152,6 +152,7 @@ canvas {
     top: 0;
     left: 0;
     background-image: url('assets/icons/Icon_TL.png');
+    z-index: 100;
 }
 
 .hamburger {
@@ -177,6 +178,7 @@ canvas {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 100;
 }
 
 .menuIcon {
@@ -185,6 +187,7 @@ canvas {
 
 .closeIcon {
     background-image: url('assets/icons/Icon_Burger-1.png');
+    background-color: white;
     display: none;
 }
 
