@@ -89,17 +89,6 @@ html, body {
     text-decoration: underline;
 }
 
-#downloadBtn {
-    position: fixed;
-    z-index: 100;
-    top: 1rem;
-    right: 1rem;
-    padding: 4px;
-    border: black solid 1px;
-    background: white;
-    cursor: pointer;
-}
-
 .menu {
     position: fixed;
     transform: translateY(-100%);
@@ -139,6 +128,32 @@ canvas {
     margin-top: 3%;
 }
 
+#downloadBtn {
+    position: fixed;
+    z-index: 100;
+    top: 1rem;
+    right: 1rem;
+    padding: 4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+.downloadIcon {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('assets/icons/Icon_TL.png');
+}
+
 .hamburger {
     position: fixed;
     z-index: 100;
@@ -151,8 +166,6 @@ canvas {
     width: 40px;
     height: 40px;
 }
-
-
 
 .menuIcon, .closeIcon {
     width: 100%;
