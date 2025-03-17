@@ -66,6 +66,7 @@
         slidesPerView: 9,
         freeMode: true,
         watchSlidesProgress: true,
+        watchSlidesVisibility: true,
         lazy: true
     });
 
@@ -104,7 +105,9 @@
             menu.classList.remove("showMenu");
             closeIcon.style.display = "none";
             menuIcon.style.display = "block";
+            menu.style.display = "none"
         } else {
+            menu.style.display = "block"
             menu.classList.add("showMenu");
             closeIcon.style.display = "block";
             menuIcon.style.display = "none";

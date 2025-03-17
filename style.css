@@ -24,7 +24,7 @@ html, body {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 95%;
+    width: 90%;
     height: 80px;
     display: flex;
     align-items: center;
@@ -119,6 +119,7 @@ html, body {
     color: white;
     list-style: none;
     padding-top: 4rem;
+    display: none;
 }
 
 .showMenu {
