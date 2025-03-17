@@ -49,6 +49,17 @@ html, body {
 
 .swiper-button-next::after, .swiper-button-prev::after {
     font-size: 90px;
+    content: none;
+}
+
+.swiper-button-next {
+    background-image: url('assets/icons/Icon_D.png');
+}
+.swiper-button-next::after {
+    content: none;
+}
+.swiper-button-prev {
+    background-image: url('assets/icons/Icon_G.png');
 }
 
 .swiper-thumbnail .swiper-slide-fully-visible {
@@ -135,7 +146,7 @@ canvas {
     left: 1rem;
     padding: 4px;
     border: none;
-    background: white;
+    background: none;
     cursor: pointer;
     width: 40px;
     height: 40px;
