@@ -26,7 +26,7 @@
     <i class="closeIcon"></i>
 </button>
 <div class="title"><span id="title-year"></span></div>
-<div style="width: 95%; margin: auto;">
+<div style="height: 95%; width: 99%;">
     <canvas id="comboChart"></canvas>
 </div>
 
@@ -105,6 +105,7 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         stacked: false,
