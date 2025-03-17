@@ -31,7 +31,6 @@ html, body {
     justify-content: center;
     background: rgba(0, 0, 0, 0.5);
     padding: 5px;
-    border-radius: 10px;
 }
 
 .swiper-thumbnail .swiper-slide {
@@ -115,7 +114,7 @@ html, body {
     right: 0;
     bottom: 0;
     z-index: 99;
-    background: rgba(1, 82, 122, 0.9);
+    background: rgba(23, 23, 23, 0.9);
     color: white;
     list-style: none;
     padding-top: 4rem;
